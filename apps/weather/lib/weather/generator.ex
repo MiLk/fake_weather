@@ -13,7 +13,7 @@ defmodule Weather.Generator do
   # Server
   def init(:ok) do
     :ets.new(:weather_cache, [:named_table, read_concurrency: true])
-    {:consumer, %{numbers: [], weathers: []}, subscribe_to: [Weather.RNG]}
+    {:consumer, %{weathers: []}, subscribe_to: [Weather.FakeWeatherGen]}
   end
 
   def handle_call({:weather, city}, _from, state) do
@@ -26,21 +26,8 @@ defmodule Weather.Generator do
   end
 
   def handle_events(events, _from, state) do
-    {:ok, numbers} = Map.fetch(state, :numbers)
     {:ok, weathers} = Map.fetch(state, :weathers)
-
-    new_rand_nums = numbers ++ events
-
-    new_state = if length(new_rand_nums) > 5 do
-      %{
-        numbers: Enum.drop(new_rand_nums, 5),
-        weathers: weathers ++ [generate_weather(Enum.take(new_rand_nums, 5))],
-      }
-    else
-      %{state | numbers: new_rand_nums}
-    end
-
-    {:noreply, [], new_state}
+    {:noreply, [], %{state | weathers: weathers ++ events}}
   end
 
   defp generate_and_save(city, state) do
@@ -53,14 +40,4 @@ defmodule Weather.Generator do
     {w, new_state}
   end
 
-  defp generate_weather(rand_nums) do
-     temp = Float.round(Enum.at(rand_nums, 0) * 40, 2)
-     %{
-        temp: temp,
-        pressure: Float.round(900 + Enum.at(rand_nums, 1) * 200, 2),
-        humidity: Float.round(10 + Enum.at(rand_nums, 2) * 80, 2),
-        temp_min: Float.round(temp - Enum.at(rand_nums, 3) * 5, 2),
-        temp_max: Float.round(temp + Enum.at(rand_nums, 4) * 5, 2),
-     }
-  end
 end

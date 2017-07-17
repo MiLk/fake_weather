@@ -1,4 +1,4 @@
-defmodule Weather.RNG do
+defmodule Weather.RandNumGen do
   use GenStage
 
   def start_link(initial \\ 0) do
