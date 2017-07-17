@@ -29,6 +29,8 @@ defmodule Weather.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:gen_stage, "~> 0.11"},
+    ]
   end
 end

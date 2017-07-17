@@ -10,6 +10,7 @@ defmodule Weather.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      worker(Weather.RNG, [0]),
       worker(Weather.Generator, []),
     ]
 
