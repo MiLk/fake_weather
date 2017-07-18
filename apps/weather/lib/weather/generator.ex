@@ -33,7 +33,7 @@ defmodule Weather.Generator do
   defp generate_and_save(city, state) do
     {:ok, weathers} = Map.fetch(state, :weathers)
 
-    [w] = Enum.take(weathers, 1)
+    {:ok, w} = Enum.fetch(weathers, 0)
     new_state = %{state | weathers: Enum.drop(weathers, 1)}
 
     :ets.insert(:weather_cache, {city, w})

@@ -26,7 +26,7 @@ defmodule Weather.FakeWeatherGen  do
     {:noreply, w, new_state}
   end
 
-  defp generate_weather(rand_nums) do
+  def generate_weather(rand_nums) do
      temp = Float.round(Enum.at(rand_nums, 0) * 40, 2)
      %{
         temp: temp,
