@@ -14,7 +14,7 @@ defmodule Weather.FakeWeatherGen  do
 
     new_nums = numbers ++ events
 
-    {w, new_state} = if length(new_nums) > 5 do
+    {w, new_state} = if length(new_nums) >= 5 do
       {
         [generate_weather(Enum.take(new_nums, 5))],
         %{state | numbers: Enum.drop(new_nums, 5)},
