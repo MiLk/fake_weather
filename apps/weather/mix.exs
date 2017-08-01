@@ -15,7 +15,7 @@ defmodule Weather.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
-    [extra_applications: [:logger],
+    [extra_applications: [:logger, :gen_stage],
      mod: {Weather.Application, []}]
   end
 
@@ -29,6 +29,6 @@ defmodule Weather.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{:gen_stage, "~> 0.12"}]
   end
 end

@@ -4,6 +4,6 @@ defmodule Weather do
   """
 
   def get_weather(city) do
-    Weather.Generator.get_weather(city)
+    Weather.Producer.get_weather(city)
   end
 end

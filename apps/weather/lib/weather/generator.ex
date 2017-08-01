@@ -30,7 +30,7 @@ defmodule Weather.Generator do
     w
   end
 
-  defp weather_for(city) do
+  defp weather_for(_city) do
      temp = Float.round(:rand.uniform() * 40, 2)
      %{
         temp: temp,

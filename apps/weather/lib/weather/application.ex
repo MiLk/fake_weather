@@ -11,6 +11,8 @@ defmodule Weather.Application do
     # Define workers and child supervisors to be supervised
     children = [
       worker(Weather.Generator, []),
+      worker(Weather.Producer, []),
+      worker(Weather.Consumer, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
