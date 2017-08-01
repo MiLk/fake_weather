@@ -1,4 +1,5 @@
 defmodule Weather.Generator do
+  require Logger
   use GenStage
 
   # Client
@@ -26,6 +27,9 @@ defmodule Weather.Generator do
   end
 
   def handle_events(events, _from, state) do
+    Logger.info fn  ->
+        "#{__MODULE__}.handle_events / state size: #{length(Map.fetch!(state, :weathers))}"
+    end
     {:ok, weathers} = Map.fetch(state, :weathers)
     {:noreply, [], %{state | weathers: weathers ++ events}}
   end
